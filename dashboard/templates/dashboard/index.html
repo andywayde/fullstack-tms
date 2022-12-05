@@ -1,1 +1,57 @@
-{% extends 'dashboard/base.html' %} {% block content %} {% endblock content %}
+{% extends 'dashboard/base.html' %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 fw-bold fs-3">
+                Dashboard
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card mt-3">
+                    <div class="card-header">
+                        Projects
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Client</th>
+                                    <th scope="col">Deadline</th>
+                                    <th scope="col">Total</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {% for project in active_projects %}
+                                  <tr>
+                                    <td>{{ project.number }}</td>
+                                    <td>{{ project.name }}</td>
+                                    <td>{{ project.client }}</td>
+                                    <td>{{ project.deadline }}</td>
+                                    <td>{{ project.total }}</td>
+                                  </tr>
+                                  {% endfor %}
+                                </tbody>
+                              </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="card mt-3">
+              <div class="card-header">
+                Total this month:
+              </div>
+              <div class="card-body">
+                RUB {{ month_total }}
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+{% endblock content %}

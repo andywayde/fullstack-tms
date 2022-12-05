@@ -20,7 +20,7 @@ class Project(models.Model):
     is_completed = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.number}: {self.name}"
+        return f"({self.number}) {self.client}: {self.name}"
 
     class Meta:
         ordering = ['date_created']

@@ -21,10 +21,13 @@
     <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}" />
   </head>
   <body>
-    {% include 'dashboard/navbar.html' %}
-    {% include 'dashboard/offcanvas.html' %} 
-    {% block content %} 
+    {% include 'dashboard/navbar.html' %} 
+    {% include 'dashboard/offcanvas.html' %}
+    <main class="mt-5 pt-3">
+    {% block content %}
+    
     {% endblock content %}
+    </main>
     <script src="{% static 'dashboard/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'dashboard/js/jquery-3.6.1.js' %}"></script>
     <script src="{% static 'dashboard/js/jquery.dataTables.min.js' %}"></script>
