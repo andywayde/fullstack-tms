@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 fw-bold fs-3">
-                Dashboard
+                Archived Projects
             </div>
         </div>
         <div class="row">
@@ -21,12 +21,12 @@
                                     <th scope="col">Name</th>
                                     <th scope="col">Client</th>
                                     <th scope="col">Deadline</th>
-                                    <th scope="col">Total</th>
+                                    <th scope="col">Total</th>                                    
                                     <th scope="col"></th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  {% for project in active_projects %}
+                                  {% for project in completed_projects %}
                                   <tr>
                                     <td>{{ project.number }}</td>
                                     <td>{{ project.name }}</td>
@@ -34,9 +34,9 @@
                                     <td>{{ project.deadline }}</td>
                                     <td>{{ project.total }}</td>
                                     <td>
-                                      <a href="{% url 'project-details' project.id %}">
-                                        <i class="bi bi-pencil-square"></i>
-                                      </a>
+                                        <a href="{% url 'project-details' project.id %}">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
                                     </td>
                                   </tr>
                                   {% endfor %}
@@ -46,18 +46,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-4">
-            <div class="card mt-3">
-              <div class="card-header">
-                Total this month:
-              </div>
-              <div class="card-body">
-                RUB {{ month_total }}
-              </div>
-            </div>
-          </div>
         </div>
     </div>
 {% endblock content %}

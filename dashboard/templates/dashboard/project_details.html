@@ -1,0 +1,24 @@
+{% extends 'dashboard/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<form class="pt-3 px-3 mt-3 mx-3" action="" method="post" autocomplete="off">
+    <h1>Project Details</h1>
+    {% csrf_token %}
+    {{ form.number|as_crispy_field }}
+    {{ form.name|as_crispy_field }}
+    {{ form.client|as_crispy_field }}
+    <div class="row">
+        <div class="col">
+            {{ form.deadline|as_crispy_field }}
+        </div>
+        <div class="col">
+            {{ form.total|as_crispy_field }}
+        </div>
+    </div>
+    {{ form.is_completed|as_crispy_field }}
+    <button type="submit" class="btn btn-success">
+        <span>Save</span>
+    </button>
+</form>   
+{% endblock content %}

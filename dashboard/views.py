@@ -28,6 +28,20 @@ def dashboard(request):
 
     return render(request, 'dashboard/index.html', context)
 
+def project_details(request, id):
+    project = Project.objects.get(pk=id)
+    if request.method == "GET":
+        form = ProjectForm(instance=project)
+        context = {
+            'form': form,
+        }
+        return render(request, 'dashboard/project_details.html', context)
+    if request.method == "POST":
+        form = ProjectForm(request.POST, instance=project)
+        if form.is_valid():
+            form.save()
+        return redirect('dashboard')
+
 def new_project(request):
     if request.method == "GET":
         form = ProjectForm()
@@ -40,3 +54,10 @@ def new_project(request):
         if form.is_valid():
             form.save()
             return redirect('dashboard')
+
+def archived(request):
+    completed_projects = Project.objects.filter(is_completed=True)
+    context = {
+        'completed_projects': completed_projects,
+    }
+    return render(request, 'dashboard/archived.html', context)
