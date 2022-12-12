@@ -1,5 +1,11 @@
 import time
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+
+# Class-based views
+from django.views.generic.edit import UpdateView
+from django.views.generic.list import ListView
+from django.views.generic import CreateView
 
 # Models
 from .models import Project
@@ -17,47 +23,33 @@ def getMonthTotal():
         sum += project.total
     return sum
 
-def dashboard(request):
-    active_projects = Project.objects.filter(is_completed=False)
-    month_total = getMonthTotal()
+class ProjectList(ListView):
+    model = Project
+    context_object_name = 'active_projects'
+    template_name = 'dashboard/index.html'
+    queryset = Project.objects.filter(is_completed=False)
 
-    context = {
-        'active_projects': active_projects,
-        'month_total': month_total,
-    }
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        month_total = getMonthTotal()
+        context["month_total"] = month_total
+        return context
+    
 
-    return render(request, 'dashboard/index.html', context)
+class ProjectUpdate(UpdateView):
+    model = Project
+    fields = '__all__'
+    template_name = 'dashboard/project_details.html'
+    success_url = reverse_lazy('dashboard')
 
-def project_details(request, id):
-    project = Project.objects.get(pk=id)
-    if request.method == "GET":
-        form = ProjectForm(instance=project)
-        context = {
-            'form': form,
-        }
-        return render(request, 'dashboard/project_details.html', context)
-    if request.method == "POST":
-        form = ProjectForm(request.POST, instance=project)
-        if form.is_valid():
-            form.save()
-        return redirect('dashboard')
+class ProjectCreate(CreateView):
+    model = Project
+    template_name = 'dashboard/add_project.html'    
+    success_url = reverse_lazy('dashboard')
+    form_class = ProjectForm
 
-def new_project(request):
-    if request.method == "GET":
-        form = ProjectForm()
-        context = {
-            'form': form,
-        }
-        return render(request, 'dashboard/add_project.html', context)
-    if request.method == "POST":
-        form = ProjectForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('dashboard')
-
-def archived(request):
-    completed_projects = Project.objects.filter(is_completed=True)
-    context = {
-        'completed_projects': completed_projects,
-    }
-    return render(request, 'dashboard/archived.html', context)
+class ArchivedList(ListView):
+    model = Project
+    queryset = Project.objects.filter(is_completed=True)
+    context_object_name = 'completed_projects'
+    template_name = 'dashboard/archived.html'

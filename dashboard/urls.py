@@ -1,9 +1,9 @@
 from django.urls import path
-from .views import dashboard, new_project, archived, project_details
+from .views import ProjectList, ProjectCreate, ArchivedList, ProjectUpdate
 
 urlpatterns = [
-    path('', dashboard, name='dashboard'),
-    path('/<int:id>', project_details, name='project-details'),
-    path('/new', new_project, name='new-project'),
-    path('/archived', archived, name='archived'),
+    path('', ProjectList.as_view(), name='dashboard'),
+    path('/<int:pk>', ProjectUpdate.as_view(), name='project-details'),
+    path('/new', ProjectCreate.as_view(), name='new-project'),
+    path('/archived', ArchivedList.as_view(), name='archived'),
 ]
